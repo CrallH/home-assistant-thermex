@@ -1,8 +1,14 @@
 blueprint:
   name: Thermex – Fan and Light Control
-  description: Control Thermex fan speed and light via UI
+  description: Control Thermex fan speed and light via user-defined trigger
   domain: automation
   input:
+    trigger_event:
+      name: Trigger
+      description: Select what triggers this automation
+      default: []
+      selector:
+        trigger:
     fan_speed:
       name: Fan Speed
       description: Set fan speed (0–4)
@@ -33,9 +39,9 @@ blueprint:
           min: 0
           max: 100
           step: 1
-trigger:
-  - platform: time
-    at: "08:00:00"
+
+trigger: !input trigger_event
+
 action:
   - service: thermex_api.update_fan
     data:
