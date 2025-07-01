@@ -21,6 +21,20 @@ Custom integration to control Thermex fans and lights over WebSocket API.
 
 ---
 
+
+## 🧩 HACS Installation
+
+You can install this integration via [HACS](https://hacs.xyz/):
+
+1. Go to **HACS → Integrations → ⋮ → Custom Repositories**
+2. Add repository: `https://github.com/CrallH/home-assistant-thermex`
+3. Set category to **Integration**
+4. Click **Install** and restart Home Assistant
+
+Then search for "Thermex" and configure as normal.
+
+Or
+
 ## 📦 Installation
 
 1. Download and extract this into `config/custom_components/thermex_api/`
