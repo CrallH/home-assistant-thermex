@@ -1,0 +1,14 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Thermex",
+        "description": "Set up your Thermex fan by providing the host and password.",
+        "data": {
+          "host": "Host (IP or hostname)",
+          "password": "Password"
+        }
+      }
+    }
+  }
+}

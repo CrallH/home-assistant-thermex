@@ -1,0 +1,13 @@
+{
+  "name": "Thermex API",
+  "content_in_root": false,
+  "domains": [
+    "fan",
+    "light",
+    "switch",
+    "sensor"
+  ],
+  "country": "SE",
+  "homeassistant": "2023.0.0",
+  "render_readme": true
+}

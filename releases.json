@@ -1,0 +1,13 @@
+{
+  "name": "Thermex API",
+  "content_in_root": true,
+  "domain": "thermex_api",
+  "documentation": "https://github.com/CrallH/home-assistant-thermex",
+  "codeowners": [
+    "@CrallH"
+  ],
+  "iot_class": "local_polling",
+  "version": "1.1.0",
+  "release_url": "https://github.com/CrallH/home-assistant-thermex/releases/latest",
+  "zip_release": true
+}

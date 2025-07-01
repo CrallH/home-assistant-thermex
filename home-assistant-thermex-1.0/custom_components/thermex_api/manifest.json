@@ -1,0 +1,13 @@
+{
+  "domain": "thermex_api",
+  "name": "Thermex (api)",
+  "version": "1.0.0",
+  "documentation": "https://example.com",
+  "dependencies": [],
+  "codeowners": [
+    "@CrallH"
+  ],
+  "requirements": [
+    "aiohttp"
+  ]
+}
