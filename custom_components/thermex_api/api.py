@@ -31,26 +31,20 @@ class ThermexAPI:
         await self._coordinator.async_refresh()
 
     async def authenticate(self, websocket):
-        auth_message = {
-            "Request": "Authenticate",
-            "Data": {"Code": self._password}
-        }
-        _LOGGER.debug("Authentication started")
-        _LOGGER.debug("Sending auth message: %s", auth_message)
-        await websocket.send_json(auth_message)
+    """Authenticate with the Thermex API."""
+    try:
+        await websocket.send(json.dumps({"Request": "Authenticate", "Password": self._password}))
         response = await websocket.receive()
-                response_data = json.loads(response.data)
-                if response_data.get("Status") == 200:
-                    _LOGGER.info("Authentication successful")
-                    return True
-                else:
-                    _LOGGER.warning("Authentication failed: %s", response_data)
-                    return False
+        response_data = json.loads(response.data)
         if response_data.get("Status") == 200:
-        if response_data.get("Status") == 200:
-        if response_data.get("Status") == 200:
-        if response_data.get("Status") == 200:
-
+            _LOGGER.info("Authentication successful")
+            return True
+        else:
+            _LOGGER.warning("Authentication failed: %s", response_data)
+            return False
+    except Exception as e:
+        _LOGGER.error("Authentication exception: %s", str(e))
+        return False
     async def fetch_status(self):
         async with aiohttp.ClientSession() as session:
             async with session.ws_connect(f'ws://{self._host}:9999/api') as websocket:
