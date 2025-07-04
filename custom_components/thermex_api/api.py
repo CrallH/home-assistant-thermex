@@ -42,8 +42,8 @@ class ThermexAPI:
             else:
                 _LOGGER.warning("Authentication failed: %s", response_data)
                 return False
-        except Exception as e:
-            _LOGGER.error("Authentication exception: %s", str(e))
+        except Exception as err:
+            _LOGGER.error("Authentication exception: %s", str(err))
             return False
     async def fetch_status(self):
         async with aiohttp.ClientSession() as session:
