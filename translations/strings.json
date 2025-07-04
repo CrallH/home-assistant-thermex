@@ -1,0 +1,22 @@
+{
+  "title": "Thermex API",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Thermex",
+        "description": "Enter IP and password of your Thermex device.",
+        "data": {
+          "host": "Device IP",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect",
+      "invalid_auth": "Invalid authentication"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  }
+}
