@@ -40,8 +40,12 @@ class ThermexAPI:
         await websocket.send_json(auth_message)
         response = await websocket.receive()
         response_data = json.loads(response.data)
-        _LOGGER.warning("Authentication response: %s", response_data)
-        if response_data.get("Status") == 200:
+if response_data.get("Status") == 200:
+        _LOGGER.info(\"Authentication successful\")
+        return True
+    else:
+        _LOGGER.warning(\"Authentication failed: %s\", response_data)
+        return False
             _LOGGER.info("Authentication successful")
             return True
         else:
