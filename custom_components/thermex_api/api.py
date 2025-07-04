@@ -31,20 +31,23 @@ class ThermexAPI:
         await self._coordinator.async_refresh()
 
     async def authenticate(self, websocket):
-        """Authenticate with the Thermex API."""
-        try:
-            await websocket.send(json.dumps({"Request": "Authenticate", "Password": self._password}))
-            response = await websocket.receive()
-            response_data = json.loads(response.data)
-            if response_data.get("Status") == 200:
-                _LOGGER.info("Authentication successful")
-                return True
-            else:
-                _LOGGER.warning("Authentication failed: %s", response_data)
-                return False
-        except Exception as err:
-            _LOGGER.error("Authentication exception: %s", str(err))
+        auth_message = {
+            "Request": "Authenticate",
+            "Data": {"Code": self._password}
+        }
+        _LOGGER.debug("Authentication started")
+        _LOGGER.debug("Sending auth message: %s", auth_message)
+        await websocket.send_json(auth_message)
+        response = await websocket.receive()
+        response_data = json.loads(response.data)
+        _LOGGER.warning("Authentication response: %s", response_data)
+        if response_data.get("Status") == 200:
+            _LOGGER.info("Authentication successful")
+            return True
+        else:
+            _LOGGER.error("Authentication failed")
             return False
+
     async def fetch_status(self):
         async with aiohttp.ClientSession() as session:
             async with session.ws_connect(f'ws://{self._host}:9999/api') as websocket:
@@ -53,16 +56,25 @@ class ThermexAPI:
                 # Kontrollera protokollversion
                 await websocket.send_json({"Request": "ProtocolVersion"})
                 version_response = await websocket.receive()
+                _LOGGER.info("ProtocolVersion response: %s", version_response.data)
 
                 await websocket.send_json({"Request": "STATUS"})
+                _LOGGER.debug("Sent STATUS request")
                 response = await websocket.receive()
+                _LOGGER.debug("Received STATUS response raw: %s", response.data)
                 response = json.loads(response.data)
                 if response.get("Response") == "Status":
+                    return response.get("Data")
+                else:
+                    _LOGGER.error("Unexpected status response: %s", response)
                     raise Exception("Unexpected STATUS response")
 
     async def async_get_data(self):
         try:
+            return await self.fetch_status()
         except Exception as err:
+            _LOGGER.error("Failed to fetch Thermex data: %s", err)
+            return {}
 
     async def update_light(self, lightonoff: int, brightness: int = DEFAULT_BRIGHTNESS):
         async with aiohttp.ClientSession() as session:
