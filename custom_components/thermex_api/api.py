@@ -46,13 +46,16 @@ class ThermexAPI:
         else:
             _LOGGER.warning("Authentication failed: %s", response_data)
             return False
-                    return False
         if response_data.get("Status") == 200:
             _LOGGER.info("Authentication successful")
             return True
         else:
-            _LOGGER.error("Authentication failed")
+            _LOGGER.warning("Authentication failed: %s", response_data)
             return False
+        if response_data.get("Status") == 200:
+        else:
+        if response_data.get("Status") == 200:
+        else:
 
     async def fetch_status(self):
         async with aiohttp.ClientSession() as session:
@@ -62,25 +65,17 @@ class ThermexAPI:
                 # Kontrollera protokollversion
                 await websocket.send_json({"Request": "ProtocolVersion"})
                 version_response = await websocket.receive()
-                _LOGGER.info("ProtocolVersion response: %s", version_response.data)
 
                 await websocket.send_json({"Request": "STATUS"})
-                _LOGGER.debug("Sent STATUS request")
                 response = await websocket.receive()
-                _LOGGER.debug("Received STATUS response raw: %s", response.data)
                 response = json.loads(response.data)
                 if response.get("Response") == "Status":
-                    return response.get("Data")
                 else:
-                    _LOGGER.error("Unexpected status response: %s", response)
                     raise Exception("Unexpected STATUS response")
 
     async def async_get_data(self):
         try:
-            return await self.fetch_status()
         except Exception as err:
-            _LOGGER.error("Failed to fetch Thermex data: %s", err)
-            return {}
 
     async def update_light(self, lightonoff: int, brightness: int = DEFAULT_BRIGHTNESS):
         async with aiohttp.ClientSession() as session:
