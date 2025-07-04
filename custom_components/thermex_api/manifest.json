@@ -9,5 +9,6 @@
   ],
   "requirements": [
     "aiohttp"
-  ]
+  ],
+  "config_flow": true
 }
