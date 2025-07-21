@@ -1,3 +1,6 @@
+
+***Archived this integration when the dev of the original integration updated his to have all functions i wanted. I'm no dev and this is pure chatgpt writen code, so better closing this and let a real dev continue on his***
+
 # Thermex API Integration for Home Assistant
 
 ![Thermex Logo](./icon.png)
